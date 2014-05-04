@@ -1,0 +1,42 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>chatterbox</title>
+    <link rel="stylesheet" href="styles/styles.css">
+
+    <!-- dependencies -->
+    <script src="bower_components/jquery/jquery.min.js"></script>
+    <script src="bower_components/underscore/underscore.js"></script>
+    <!-- your scripts -->
+    <script src="scripts/config.js"></script>
+    <script src="scripts/app.js"></script>
+  </head>
+  <body>
+    <div id="main">
+      <h1>chatterbox<br>(click me for all messages!)</h1>
+      <!-- Your HTML goes here! -->
+      <div>
+        Message: <input type="text" id="newmessagetext" value="Hello World!"><br>
+        Room: <input type="text" id="newmessageroom" value="The World"><br>
+        Name: <input type="text" id="newmessageuser" value="Peter Pan"><br>
+        <button id="newmessagebutton">Submit</button>
+      </div>
+      <div class='chat'> Chat messages
+        <p>CurrentRoom: all, UserMessages: all</p>
+        <ul></ul>
+      </div>
+    </div>
+    <div id='rightbar'>
+      <div class='rooms'> Rooms (click a room to view its messages!)
+        <ul></ul>
+      </div>
+      <div class='users'> Users (click a user to make him/her a friend!)
+        <ul></ul>
+      </div>
+      <div class='friends'> Friends (click a friend to view their messages!)
+        <ul></ul>
+      </div>
+    </div>
+  </body>
+</html>
