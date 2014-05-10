@@ -1,11 +1,13 @@
 // YOUR CODE HERE:
 var app = {};
 
+var portNum = 3000;
+// Methods contained in this file: fetch, display, send, updateUsers, updateRooms, init
 
 //gets data from server, extracts data.results, which is an array, containing all objects that inturn contain all relevant chat data: (createdAt, objectId, roomname, text, updatedAt, username). This is the data that we use to display in our chatroom.
 app.fetch = function(){
   $.ajax({
-    url: "http://127.0.0.1:3000/classes/messages",   //show most recent messages
+    url: "http://127.0.0.1:" + portNum + "/classes/messages",   //show most recent messages
     type: "GET",
     dataType: "json",
     success: function(data){
@@ -38,13 +40,13 @@ app.display = function(particular, type){
     if (type === 'room'){
       //print only messages from that room
       if (instance.roomname === particular){
-        $('.chat ul').append(message)
+        $('.chat ul').append(message);
       }
     }
     else if (type === 'person'){
       //print only messages from that person
       if (instance.username === particular){
-        $('.chat ul').append(message)
+        $('.chat ul').append(message);
       }
     }
     else if (type === 'all'){
@@ -60,7 +62,7 @@ app.display = function(particular, type){
 app.send = function(data){
   console.log(data);
   $.ajax({
-    url: "http://127.0.0.1:3000/classes/messages",
+    url: "http://127.0.0.1:" + portNum + "/classes/messages",
     type: 'POST',
     data: JSON.stringify(data),
     contentType: "application/json",
@@ -112,7 +114,7 @@ app.init = function(){
   app.fetch();
   setInterval(function(){
     self.fetch();
-  }, 3000);
+  }, portNum);
 };
 
 app.friends = [];

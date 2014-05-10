@@ -14,9 +14,6 @@ exports.handler = function(request, response) {
   /*  the 'request' argument comes from nodes http module. It includes info about the
   request - such as what URL the browser is requesting. */
 
-  /* Documentation for both request and response can be found at
-   * http://nodemanual.org/0.8.14/nodejs_ref_guide/http.html */
-
   console.log("Serving request type " + request.method + " for url " + request.url);
 
   /* Without this line, this server wouldn't work. See the note
@@ -26,6 +23,7 @@ exports.handler = function(request, response) {
 
   // define the path that is accepted
   var path = url.parse(request.url).pathname;
+// BEGIN IF STATEMENTS RELATING TO CHAT RELATED SERVER REQUESTS //
   if (path === '/classes/messages'){
     if (request.method === 'GET'){
       console.log("GET request received");
@@ -33,8 +31,8 @@ exports.handler = function(request, response) {
 
       fs.readFile('../server/messages.rtf', 'utf8', handleFile);
 
-
-      function handleFile (err, data) {
+      //here is the callback on what to do once fs has read all the messages
+      var handleFile = function (err, data) {
         if (err) {
           throw err;
         }
@@ -43,8 +41,9 @@ exports.handler = function(request, response) {
         var responsePackage = JSON.parse("[" + data + "]");
         responsePackage = JSON.stringify({results: responsePackage});
         response.end(responsePackage);
-      }
+      };
     }
+    //post is used for sending messages to the server
     else if (request.method === 'POST'){
       // for posts, wait until entire message is received,
       // add to the string as packets come in
@@ -71,6 +70,7 @@ exports.handler = function(request, response) {
       response.end();
     }
   }
+// BEGIN CHECKS FOR INITIAL PAGE LOAD REQUESTS I.E. WHEN YOU LOOK FOR INDEX.HTML and all other things //
   else if (path === '/'){   //home path loads up the client html page
     fs.readFile('../client/index.html', function (err, html) {
       if (err) {
@@ -132,7 +132,7 @@ exports.handler = function(request, response) {
       response.end();
     });
   }
-  else { // path was illegal - 404 them
+  else { // path was illegal - 404 them!
     response.writeHead(404, headers);
     response.end();
   }
