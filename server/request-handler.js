@@ -51,12 +51,11 @@ exports.handler = function(request, response) {
       request.on('data', function (data){
         newMessage += data;
       });
-      console.log('in post');
       // once complete, begin actual parsing and pushing to messages
       request.on('end', function(){
         newMessage = JSON.parse(newMessage);
         newMessage.createdAt = Date();
-        fs.appendFile('./messages.rtf', ", " + JSON.stringify(newMessage));
+        fs.appendFile('./server/messages.rtf', ", " + JSON.stringify(newMessage));
       });
       response.writeHead(201, headers);
       response.end();
